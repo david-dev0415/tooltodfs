@@ -1,21 +1,55 @@
-// import inquirer from 'inquirer';
-import db from './database/db.js'
-import { cleanLogs } from './database/queries.js'
-import prompt from './util/prompt.js'
+import inquirer from 'inquirer'
+import Prompt from './util/prompt.js'
+import Queries from './database/queries.js'
+// import db from './database/db.js'
 
-// const queries = cleanLogs.split(';').map(query => query.trim()).filter(query => query.length > 0);
+const questions = [
+  {
+    type: 'list',
+    name: 'theme',
+    message: '¿Qué quieres hacer?',
+    choices: [
+      'Ver espacio de unidad de respaldos DFS',
+      'Ver LOGS DFS',
+      new inquirer.Separator(),
+      'Limpiar LOGS DFS',
+      'Limpiar despachos antiguos',
+      {
+        name: 'Mover archivos de respaldo DFS.',
+        disabled: '| Aún no se encuentra disponible.',
+      },
+      new inquirer.Separator(),
+      'Salir',
+    ],
+  },
+]
 
-(async () => {
-  try {
-    // await db.executeTransaction(queries)
-    // console.log('Consultas ejecutadas exitosamente.')
+async function main () {
+  const prompt = new Prompt(questions)
+  const answers = await prompt.ask()
 
-    const confirmation = await prompt.askForConfirmation('¿Desea limpiar los logs de DFS?', 'confirm')
-    console.log(confirmation)
-
-
-  } catch (error) {
-    console.log('Error querying database', error)
+  switch (answers.theme) {
+    case 'Ver espacio de unidad de respaldos DFS':
+      Queries.checkBackupSpace()
+      break
+    case 'Ver LOGS DFS':
+      Queries.viewLogs()
+      break
+    case 'Limpiar LOGS DFS':
+      Queries.cleanLogs()
+      break
+    case 'Limpiar despachos antiguos':
+      Queries.viewLogs()
+      break
+    case 'Salir':
+      console.log('Saliendo...')
+      break
+    default:
+      console.log('Opción no válida')
   }
-})()
 
+  console.log('Fin del programa')
+
+}
+
+main()

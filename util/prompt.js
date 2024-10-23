@@ -34,4 +34,4 @@ class Prompt {
 
 }
 
-export default new Prompt()
+export default Prompt

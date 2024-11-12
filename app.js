@@ -1,13 +1,14 @@
 import inquirer from 'inquirer'
 import Prompt from './util/prompt.js'
 import Queries from './database/queries.js'
+import MessageTemplate from './util/messageTemplate.js'
 // import db from './database/db.js'
 
 const questions = [
   {
-    type: 'list',
-    name: 'theme',
-    message: '¿Qué quieres hacer?',
+    type: 'rawlist',
+    name: 'option',
+    message: '¿Qué deseas hacer? (Seleciona entre las opciones 1 al 6): ',
     choices: [
       'Ver espacio de unidad de respaldos DFS',
       'Ver LOGS DFS',
@@ -25,10 +26,16 @@ const questions = [
 ]
 
 async function main () {
+
+  // Message to user
+  const message = new MessageTemplate('Bienvenido a la herramienta de administración para el sistema DFS')
+  console.log(message.colorMessage('green', 'bgWhite'))
+  console.log('\n')
+
   const prompt = new Prompt(questions)
   const answers = await prompt.ask()
 
-  switch (answers.theme) {
+  switch (answers.option) {
     case 'Ver espacio de unidad de respaldos DFS':
       Queries.checkBackupSpace()
       break

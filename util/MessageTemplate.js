@@ -2,7 +2,7 @@ import clc from 'cli-color'
 
 class MessageTemplate {
 
-  #message
+  #message = 'This is a message default.'
 
   constructor (message) {
     this.#message = message

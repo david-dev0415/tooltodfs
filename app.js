@@ -29,7 +29,7 @@ async function main () {
 
   // Message to user
   const message = new MessageTemplate('Bienvenido a la herramienta de administración para el sistema DFS')
-  console.log(message.colorMessage('green', 'bgWhite'))
+  console.log(message.colorMessage('green', 'bg'))
   console.log('\n')
 
   const prompt = new Prompt(questions)

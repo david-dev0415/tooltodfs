@@ -1,22 +1,22 @@
-# Proyecto Sys.Coonatra ToolToDFS
+# Proyecto ToolToDFS 🚀
 
-## Descripción
+## Descripción 📄
 ToolToDFS es una herramienta diseñada para facilitar la gestión restante de espacio en la base de datos y disco duro de un equipo remoto. Para la instancia necesaria, el servidor de la central de Monitoreo de Coonatra. 
 
 Proporciona una interfaz intuitiva, permitiendo selecionar las opciones del menú que sean necesarias.
 
-## Características
+## Características ✨
 - Limpiar logs de forma a un equipo remoto (servidor).
 - Ver detalles de equipo remoto (memoria y espacio en disco duro).
 - Ejecución de sentencias SQL de forma remota.
 
-## Librerías Utilizadas
+## Librerías Utilizadas 📚
 - **Express**: Para la creación de servidores web.
 - **Mongoose**: Para la modelación de datos en MongoDB.
 - **Axios**: Para realizar solicitudes HTTP.
 - **Chalk**: Para la impresión de texto en color en la terminal.
 
-## Colores Disponibles (cli-color)
+## Colores Disponibles (cli-color) 🎨
 
 | Foreground | Background |
 |------------|------------|
@@ -29,10 +29,10 @@ Proporciona una interfaz intuitiva, permitiendo selecionar las opciones del men�
 | cyan       | bgCyan     |
 | white      | bgWhite    |
 
-## Nota: 
+## Nota 📝
 Para el uso de la clase `MessageTemplate` y el método `colorMessage`, consulte la documentación correspondiente.
 
-## Instalación
+## Instalación 🛠️
 Para instalar las dependencias necesarias, ejecute:
 ```bash
 npm install

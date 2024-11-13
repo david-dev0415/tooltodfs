@@ -9,7 +9,7 @@ class Queries {
   }
 
   static cleanLogs () {
-    console.log('Cleaning logs...')
+    console.log('Cleaning logs... from queries')
     const query = `
       DBCC SHRINKDATABASE (DFS, TRUNCATEONLY);
 

@@ -1,5 +1,8 @@
 import sql from 'mssql'
 import dotenv from 'dotenv'
+import MessageTemplate from '../util/messageTemplate.js'
+
+global.connected = false
 
 dotenv.config()
 
@@ -21,12 +24,13 @@ class Database {
     this.pool = null
   }
 
-  connect () {
+  async connect () {
     if (!this.pool) {
       try {
-        this.pool = sql.connect(config)
-        console.log('Connected to database')
+        this.pool = await sql.connect(config)
+        global.connected = true
       } catch (error) {
+        this.showMessageToUser('Error: no hubo conexión con la base de datos DFS.', 'error')
         console.log('Error connecting to database', error)
       }
     }
@@ -46,11 +50,23 @@ class Database {
     }
   }
 
+  showMessageToUser (message, type = 'info') {
+    const messageTemplate = new MessageTemplate(message)
+    if (type === 'info') {
+      console.log(messageTemplate.colorMessage('blue', 'bgWhite'))
+    } else if (type === 'error') {
+      console.log(messageTemplate.colorMessage('red', 'bgWhite'))
+    } else {
+      console.log(messageTemplate.colorMessage('white', 'bgBlack'))
+    }
+  }
+
   async close () {
     try {
       if (this.pool) {
         await this.pool.close()
         this.pool = null
+        global.connected = false
         console.log('Closed database connection')
       }
     } catch (error) {

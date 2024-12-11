@@ -2,8 +2,8 @@ import inquirer from 'inquirer'
 import Prompt from './util/prompt.js'
 import Queries from './database/queries.js'
 import MessageTemplate from './util/messageTemplate.js'
-// import db from './database/db.js'
 import cleanController from './controllers/cleanController.js'
+import lookLogs from './services/seeLogs.js'
 
 const questions = [
   {
@@ -27,7 +27,6 @@ const questions = [
 
 async function main () {
 
-
   if (global.connected) {
     console.log('Conexión establecida con la base de datos DFS')
   } else {
@@ -46,7 +45,17 @@ async function main () {
       Queries.checkBackupSpace()
       break
     case 'Ver LOGS DFS.':
-      Queries.viewLogs()
+      // Queries.viewLogs()
+      const message = new MessageTemplate('\nTamaño de archivos de la base de datos\n')      
+      console.log(message.colorMessage('blue', 'bgWhite'))
+      lookLogs().then(data => {
+        message.setMessage(data)
+        message.colorMessage('green', 'bgWhite')
+        console.log(data)
+      }).catch(err => {
+        const message = new MessageTemplate(err)
+        console.log(message.colorMessage('red', 'bgWhite'))
+      })    
       break
     case 'Limpiar LOGS DFS.':
       cleanController.clean()

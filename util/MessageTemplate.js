@@ -27,6 +27,10 @@ class MessageTemplate {
     return clc[color][bgColor](this.#message)
   }
 
+  setMessage(message) {
+    this.#message = message
+  }
+
 }
 
 export default MessageTemplate

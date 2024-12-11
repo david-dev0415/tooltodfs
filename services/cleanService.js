@@ -20,7 +20,7 @@ class CleanService {
       await this.pool.query(shrinkFileQuery)
       await this.pool.query(`ALTER DATABASE DFS SET RECOVERY FULL;`)
 
-      console.log('Cleaning logs completed.')
+      console.log('Limpiando logs de la base de datos DFS...')
     } catch (err) {
       console.error('Error cleaning logs:', err.message)
       this.pool.showMessageToUser('Error al limpiar los logs. Por favor, intente de nuevo más tarde.', 'error')

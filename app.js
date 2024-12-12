@@ -3,7 +3,9 @@ import Prompt from './util/prompt.js'
 import Queries from './database/queries.js'
 import MessageTemplate from './util/messageTemplate.js'
 import cleanController from './controllers/cleanController.js'
-import lookLogs from './services/seeLogs.js'
+import viewSpace from './services/viewSpace.js'
+
+import { PATHDB } from './constants/contansts.js'
 
 const questions = [
   {
@@ -42,20 +44,21 @@ async function main () {
 
   switch (answers.option) {
     case 'Ver espacio de unidad de respaldos DFS.':
-      Queries.checkBackupSpace()
+      viewSpace('diskspace', '\\\\Svr01\\c')
       break
     case 'Ver LOGS DFS.':
       // Queries.viewLogs()
-      const message = new MessageTemplate('\nTamaño de archivos de la base de datos\n')      
-      console.log(message.colorMessage('blue', 'bgWhite'))
-      lookLogs().then(data => {
-        message.setMessage(data)
-        message.colorMessage('green', 'bgWhite')
-        console.log(data)
-      }).catch(err => {
-        const message = new MessageTemplate(err)
-        console.log(message.colorMessage('red', 'bgWhite'))
-      })    
+      viewSpace('filesize', PATHDB)
+        .then(response => {
+          for (const res of response) {
+            if (res.name.includes('mdf')) {
+              console.log(`\nDFS: ${res.name}, tamaño: ${res.sizeGB} GB`);
+            } else {
+              console.log(`DFS LOGS: ${res.name}, tamaño: ${res.sizeKB} KB\n`)
+            }           
+          }
+        })
+        .catch(err => console.log(err))
       break
     case 'Limpiar LOGS DFS.':
       cleanController.clean()
